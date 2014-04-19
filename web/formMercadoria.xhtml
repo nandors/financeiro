@@ -1,0 +1,92 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form styleClass="form-horizontal">
+		<fieldset>
+			<legend>
+				<h3>
+					<h:outputText value="Livros" />
+					<small> <h:outputText value="Cadastro" /></small>
+				</h3>
+			</legend>
+			<div class="control-group">
+				<label class="control-label"><h:outputText
+						value="Editor" /></label>
+				<div class="controls">
+					<h:inputText value="#{livroController.livro.titulo}"
+						label="Editor" required="true"
+						styleClass="input-large">
+						<f:validateLength minimum="5" maximum="60" />
+					</h:inputText>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label"><h:outputText
+						value="Autor" /></label>
+				<div class="controls">
+					<h:inputText value="#{livroController.livro.autor}"
+						label="Autor" required="true"
+						styleClass="input-large">
+						<f:validateLength minimum="5" maximum="100" />
+					</h:inputText>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label"><h:outputText
+						value="Páginas" /></label>
+				<div class="controls">
+					<h:inputText value="#{livroController.livro.paginas}"
+						label="Páginas" required="true"
+						styleClass="input-small">
+						<f:convertNumber />
+						<f:validateLongRange minimum="1" />
+					</h:inputText>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label"><h:outputText
+						value="Editora" /></label>
+				<div class="controls">
+					<h:inputText value="#{livroController.livro.editora}"
+						label="Editora" required="true"
+						styleClass="input-small">
+					</h:inputText>
+				</div>
+			</div>
+		</fieldset>
+
+		<div class="control-group">
+			<div class="controls">
+				<p:commandButton value="Salvar"
+					action="#{livroController.salvar}" styleClass="btn btn-success" onclick="dlg.show();" oncomplete="dlg.hide();"
+                                        />
+				<p:button value="Cancelar"
+					outcome="listaMercadorias" styleClass="btn" />
+				<p:commandButton value="Excluir"
+					onclick="confirmation.show()"
+				 immediate="true"
+					styleClass="btn btn-danger" />
+			</div>
+		</div>
+		
+		<p:dialog id="dialog" header="Confirmação" widgetVar="dlg" dynamic="true" modal="true">  
+	    	<h:outputText value="Aguarde !!!" />  
+		</p:dialog>
+		
+		<p:confirmDialog id="confirmDialog" message="Confirma a exclusão"
+			header="Excluir Mercadoria" severity="alert" widgetVar="confirmation">  
+	        <p:commandButton id="confirm" value="Sim" update="messages" 
+	        	oncomplete="confirmation.hide()" action="#{livroController.remover}" />  
+	        <p:commandButton id="decline" value="Não" 
+	        	onclick="confirmation.hide()" type="button" />
+	    </p:confirmDialog>
+	
+		<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+	</h:form>
+</ui:fragment>
